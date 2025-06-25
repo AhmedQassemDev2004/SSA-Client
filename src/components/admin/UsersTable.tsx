@@ -91,8 +91,6 @@ export default function UsersTable({setUsers, query, refresh}: UsersTableProps) 
         } else {
             setFilteredUsers(allUsers);
         }
-
-        console.log("Users updated.....")
     }, [query, allUsers]);
 
     const handleDelete = async (userId: number) => {
@@ -153,7 +151,6 @@ export default function UsersTable({setUsers, query, refresh}: UsersTableProps) 
         return <div className="text-gray-400">No users found</div>;
     }
 
-    console.log(filteredUsers)
     return (
         <>
             <div className="rounded-md border border-gray-700">

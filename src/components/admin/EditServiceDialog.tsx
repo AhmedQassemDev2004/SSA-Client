@@ -126,8 +126,6 @@ export function EditServiceDialog({
 
     setIsLoading(true);
 
-    console.log("Submitting form data:", formData);
-
     try {
       // Prepare the data to send, ensuring categoryId is properly handled
       const submitData = {
@@ -135,11 +133,7 @@ export function EditServiceDialog({
         categoryId: formData.categoryId || null, // Send null instead of undefined
       };
 
-      console.log("Submitting to API:", submitData);
-
       const response = await api.patch(`/services/${service.id}`, submitData);
-
-      console.log("API Response:", response);
 
       if (response.status !== 200) {
         throw new Error("Failed to update service");

@@ -13,8 +13,6 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
     return <LoadingScreen text="Checking permissions..." />;
   } 
 
-  console.log(user)
-
   if (!user) {
     return <Navigate to="/login" />;
   }

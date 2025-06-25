@@ -73,8 +73,6 @@ export function ServicesTable({refresh, onServicesLoaded, query}: ServicesTableP
         } finally {
             setIsLoading(false);
         }
-
-        console.log("Loading services");
     };
 
     useEffect(() => {

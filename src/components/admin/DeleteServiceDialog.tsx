@@ -63,11 +63,11 @@ export function DeleteServiceDialog({
     setIsLoading(true);
 
     try {
-      console.log("Deleting service with ID:", serviceId);
+      // console.log("Deleting service with ID:", serviceId);
 
       const response = await api.delete(`/services/${serviceId}`);
 
-      console.log("Delete API Response:", response);
+      // console.log("Delete API Response:", response);
 
       // Check for both 200 and 204 status codes (NestJS typically returns 204 for successful deletions)
       if (response.status !== 200 && response.status !== 204) {

@@ -51,7 +51,6 @@ const ServiceDetail = () => {
       try {
         const response = await api.get<Service>(`/services/${id}`);
         setService(response.data);
-        console.log(response.data)
       } catch (error) {
         console.error('Failed to fetch service:', error);
         setError('Failed to load service details. Please try again later.');

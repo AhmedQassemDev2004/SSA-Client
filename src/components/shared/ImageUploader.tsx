@@ -95,8 +95,6 @@ export function ImageUploader({images, onChange, maxImages = 5}: ImageUploaderPr
         onChange(newImages);
     };
 
-    console.log(images)
-
     return (
         <div className="space-y-2">
             {/* Display existing images */}
@@ -114,7 +112,6 @@ export function ImageUploader({images, onChange, maxImages = 5}: ImageUploaderPr
                                 imageUrl = `${cleanApiBaseUrl}${image}`;
                             }
                         }
-                        console.log(`Image ${index}:`, { original: image, constructed: imageUrl });
                         
                         return (
                         <Card key={index} className="relative aspect-video overflow-hidden group h-16">
@@ -127,7 +124,6 @@ export function ImageUploader({images, onChange, maxImages = 5}: ImageUploaderPr
                                     e.currentTarget.style.display = 'none';
                                 }}
                                 onLoad={() => {
-                                    console.log('Image loaded successfully:', imageUrl);
                                 }}
                             />
                             <div
