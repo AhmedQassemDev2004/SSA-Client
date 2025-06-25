@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-[#131212] text-foreground font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-medium tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply bg-opacity-20 backdrop-blur-sm bg-gray-900/60 border border-gray-800;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-ssa-gold to-amber-300 bg-clip-text text-transparent;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .animate-on-scroll {
+    @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
+  }
+
+  .animate-on-scroll.in-view {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+/* Rich Text Editor Styles */
+.rich-text-editor-container .ql-container {
+  background-color: rgb(31, 41, 55);
+  border-color: rgb(55, 65, 81);
+  color: rgb(209, 213, 219);
+  min-height: 120px;
+}
+
+.rich-text-editor-container .ql-toolbar {
+  background-color: rgb(31, 41, 55);
+  border-color: rgb(55, 65, 81);
+}
+
+.rich-text-editor-container .ql-toolbar button {
+  color: rgb(209, 213, 219);
+}
+
+.rich-text-editor-container .ql-toolbar button:hover {
+  color: rgb(245, 158, 11);
+}
+
+.rich-text-editor-container .ql-toolbar .ql-active {
+  color: rgb(245, 158, 11);
+}
+
+.rich-text-editor-container .ql-editor {
+  color: rgb(209, 213, 219);
+}
+
+.rich-text-editor-container .ql-editor.ql-blank::before {
+  color: rgb(107, 114, 128);
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 6px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #917243 0%, #d9b97a 100%);
+  border-radius: 6px;
+  border: 2px solid #1a1a1a;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(145, 114, 67, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #d9b97a 0%, #f0d9b3 100%);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(145, 114, 67, 0.6);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #f0d9b3 0%, #917243 100%);
+  box-shadow: 0 0 20px rgba(145, 114, 67, 0.8);
+}
+
+::-webkit-scrollbar-corner {
+  background: #1a1a1a;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #917243 #1a1a1a;
+}
+
+/* Progress Bar Styles */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(145, 114, 67, 0.2);
+  z-index: 9999;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #917243, #d9b97a, #f0d9b3, #917243);
+  background-size: 200% 100%;
+  width: 0%;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px rgba(145, 114, 67, 0.5);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Animated Background Styles */
+.animated-bg-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.animated-bg-container * {
+  pointer-events: none;
+}
+
+/* Ensure content sections have proper z-index */
+.content-section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth transitions for background changes */
+.bg-transition {
+  transition: all 1s ease-in-out;
+}
