@@ -8,11 +8,4 @@ import { HashRouter } from 'react-router-dom';
 // Suppress ReactQuill warnings globally
 suppressReactQuillWarnings();
 
-createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-        <HashRouter>
-            <App />
-        </HashRouter>
-    </React.StrictMode>
-
-);
+createRoot(document.getElementById("root")!).render(<App />);
