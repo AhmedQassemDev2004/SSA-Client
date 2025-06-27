@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Star, Award, Users, Target, TrendingUp, Globe, Shield, Zap } from "lucide-react";
 
-const About = () => {
+interface AboutProps {
+  isMobile?: boolean;
+}
+
+const About: React.FC<AboutProps> = ({ isMobile }) => {
   const achievements = [
     { number: "10+", label: "Years Experience", icon: Award },
     { number: "250+", label: "Happy Clients", icon: Users },

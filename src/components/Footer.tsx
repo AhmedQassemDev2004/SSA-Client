@@ -1,15 +1,19 @@
 import React from "react";
 import {Separator} from "@/components/ui/separator";
 
-const Footer = () => {
+interface FooterProps {
+    isMobile?: boolean;
+}
+
+const Footer: React.FC<FooterProps> = ({ isMobile }) => {
     return (
         <footer className="bg-[#0c0c0c] border-t border-gray-800 py-16">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                     <div>
-                        <h3 className="text-xl font-bold text-ssa-gold mb-4">SSA</h3>
+                        <h3 className="text-xl font-bold text-ssa-gold mb-4">Strategy Stars Ads</h3>
                         <p className="text-gray-400 mb-4">
-                            Strategic Success Agency helps businesses grow through innovative marketing solutions and
+                            Strategy Stars Ads helps Egyptian businesses grow through innovative marketing solutions and
                             data-driven strategies.
                         </p>
                     </div>
@@ -49,22 +53,14 @@ const Footer = () => {
                     <div>
                         <h3 className="text-white font-semibold mb-4">Connect</h3>
                         <div className="flex space-x-4 mb-4">
-                            <a href="#"
-                               className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-ssa-gold hover:bg-ssa-gold hover:text-[#131212] transition-colors">
-                                <span>f</span>
-                            </a>
-                            <a href="#"
-                               className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-ssa-gold hover:bg-ssa-gold hover:text-[#131212] transition-colors">
-                                <span>in</span>
-                            </a>
-                            <a href="#"
-                               className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-ssa-gold hover:bg-ssa-gold hover:text-[#131212] transition-colors">
-                                <span>tw</span>
-                            </a>
-                            <a href="#"
-                               className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-ssa-gold hover:bg-ssa-gold hover:text-[#131212] transition-colors">
-                                <span>ig</span>
-                            </a>
+                          <a href="https://www.instagram.com/strategy.stars.ads/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-ssa-gold hover:bg-ssa-gold hover:text-[#131212] transition-colors">
+                            <span className="sr-only">Instagram</span>
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" className="w-6 h-6" />
+                          </a>
+                          <a href="https://www.facebook.com/strategy.stars.ads" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-ssa-gold hover:bg-ssa-gold hover:text-[#131212] transition-colors">
+                            <span className="sr-only">Facebook</span>
+                            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" className="w-6 h-6" />
+                          </a>
                         </div>
                         <p className="text-gray-400">
                             Subscribe to our newsletter for the latest marketing insights.
@@ -76,7 +72,7 @@ const Footer = () => {
 
                 <div className="pt-8 flex flex-col md:flex-row justify-between items-center">
                     <p className="text-gray-400 text-sm mb-4 md:mb-0">
-                        © {new Date().getFullYear()} Strategic Success Agency. All rights reserved.<br/>
+                        © {new Date().getFullYear()} Strategy Stars Ads. All rights reserved.<br/>
                         <span className="text-xs text-gray-500">Developed by <a href="mailto:ahmedqasem043@gmail.com"
                                                                                 className="underline hover:text-ssa-gold">ahmedqasem043@gmail.com</a></span>
                     </p>

@@ -12,7 +12,11 @@ interface ContactFormData {
   message: string;
 }
 
-const Contact = () => {
+interface ContactProps {
+  isMobile?: boolean;
+}
+
+const Contact: React.FC<ContactProps> = ({ isMobile }) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>({
@@ -100,31 +104,26 @@ const Contact = () => {
             <div className="space-y-4">
               <div className="flex items-center">
                 <div className="w-10 h-10 rounded-full bg-ssa-gold/20 flex items-center justify-center mr-4">
+                  <span className="text-ssa-gold">📞</span>
+                </div>
+                <div>
+                  <p className="text-white">011 13337724</p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <div className="w-10 h-10 rounded-full bg-ssa-gold/20 flex items-center justify-center mr-4">
                   <span className="text-ssa-gold">📍</span>
                 </div>
                 <div>
-                  <p className="text-white">123 Marketing Street, Business District</p>
-                  <p className="text-gray-400">New York, NY 10001</p>
+                  <p className="text-white">2 Almaza Street from Thawra Street - Heliopolis, Cairo, Egypt</p>
                 </div>
               </div>
-              
-              <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-ssa-gold/20 flex items-center justify-center mr-4">
-                  <span className="text-ssa-gold">📱</span>
-                </div>
-                <div>
-                  <p className="text-white">+1 (555) 123-4567</p>
-                  <p className="text-gray-400">Mon-Fri, 9AM-6PM</p>
-                </div>
-              </div>
-              
               <div className="flex items-center">
                 <div className="w-10 h-10 rounded-full bg-ssa-gold/20 flex items-center justify-center mr-4">
                   <span className="text-ssa-gold">✉️</span>
                 </div>
                 <div>
-                  <p className="text-white">contact@ssaagency.com</p>
-                  <p className="text-gray-400">We'll respond within 24 hours</p>
+                  <a href="mailto:Strategystarsads@gmail.com" className="text-white hover:text-ssa-gold transition-colors">Strategystarsads@gmail.com</a>
                 </div>
               </div>
             </div>

@@ -6,11 +6,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { api } from "@/lib/api";
 import {stripHtml, getImageUrl} from "@/lib/utils"
+
+interface ServicesProps {
+  isMobile?: boolean;
+}
 
 interface Service {
   id: number;
@@ -22,10 +26,11 @@ interface Service {
   active: boolean;
 }
 
-const Services = () => {
+const Services: React.FC<ServicesProps> = ({ isMobile }) => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -39,9 +44,17 @@ const Services = () => {
         setLoading(false);
       }
     };
-
     fetchServices();
   }, []);
+
+  const visibleServices = services.filter(s => s.active).slice(0, 6);
+
+  const handlePrev = () => {
+    setCurrent((prev) => (prev === 0 ? visibleServices.length - 1 : prev - 1));
+  };
+  const handleNext = () => {
+    setCurrent((prev) => (prev === visibleServices.length - 1 ? 0 : prev + 1));
+  };
 
   if (loading) {
     return (
@@ -83,9 +96,88 @@ const Services = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {services.slice(0, 6).map((service, index) =>
-            service.active ? (
+        {isMobile ? (
+          <div className="flex flex-col items-center">
+            <div className="w-full max-w-sm">
+              <AnimatePresence mode="wait">
+                {visibleServices.length > 0 && (
+                  <motion.div
+                    key={current}
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -40 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <Link to={`/services/${visibleServices[current].id}`} className="block">
+                      <Card className="bg-gradient-to-br from-[#1b1b1b] to-[#232323] border border-gray-800 hover:border-ssa-gold/60 shadow-xl rounded-2xl overflow-hidden group transition-all duration-300 hover:shadow-2xl hover:shadow-ssa-gold/10 cursor-pointer">
+                        <CardHeader className="relative p-0">
+                          <div className="aspect-[4/3] overflow-hidden">
+                            <img
+                              src={
+                                visibleServices[current].images?.length > 0
+                                  ? getImageUrl(visibleServices[current].images[0])
+                                  : "/placeholder.svg"
+                              }
+                              alt={visibleServices[current].name}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent group-hover:opacity-100 opacity-0 transition-opacity duration-300" />
+                            <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-300">
+                              <div className="bg-ssa-gold/90 backdrop-blur-sm text-[#131212] px-6 py-3 text-sm font-semibold rounded-lg shadow-lg transition-all duration-300 group-hover:scale-105 flex items-center gap-2">
+                                View Details
+                                <ArrowRight className="h-4 w-4" />
+                              </div>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="p-6 flex flex-col gap-3">
+                          <div className="flex items-center justify-between">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ssa-gold/30 to-yellow-400/20 flex items-center justify-center">
+                              <span className="text-lg">✨</span>
+                            </div>
+                          </div>
+                          <CardTitle className="text-xl font-bold bg-gradient-to-r from-ssa-gold to-yellow-400 bg-clip-text text-transparent group-hover:from-yellow-400 group-hover:to-ssa-gold transition-all duration-300">
+                            {visibleServices[current].name}
+                          </CardTitle>
+                          <p className="text-sm text-gray-400 line-clamp-3">
+                            {stripHtml(visibleServices[current].description)}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            <div className="flex items-center gap-6 mt-6">
+              <button
+                aria-label="Previous service"
+                onClick={handlePrev}
+                className="p-2 rounded-full bg-ssa-gold/20 hover:bg-ssa-gold/40 transition-colors"
+              >
+                <ChevronLeft className="w-6 h-6 text-ssa-gold" />
+              </button>
+              <div className="flex gap-2">
+                {visibleServices.map((_, idx) => (
+                  <span
+                    key={idx}
+                    className={`w-2 h-2 rounded-full ${idx === current ? "bg-ssa-gold" : "bg-gray-700"}`}
+                  />
+                ))}
+              </div>
+              <button
+                aria-label="Next service"
+                onClick={handleNext}
+                className="p-2 rounded-full bg-ssa-gold/20 hover:bg-ssa-gold/40 transition-colors"
+              >
+                <ChevronRight className="w-6 h-6 text-ssa-gold" />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {visibleServices.map((service, index) =>
               <motion.div
                 key={service.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -105,6 +197,7 @@ const Services = () => {
                           }
                           alt={service.name}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent group-hover:opacity-100 opacity-0 transition-opacity duration-300" />
                         <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-100 opacity-0 transition-opacity duration-300">
@@ -131,9 +224,9 @@ const Services = () => {
                   </Card>
                 </Link>
               </motion.div>
-            ) : null
-          )}
-        </div>
+            )}
+          </div>
+        )}
 
         {/* View All Button */}
         <motion.div

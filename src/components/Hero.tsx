@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp, Users, Target, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
-const Hero = () => {
+interface HeroProps {
+  isMobile?: boolean;
+}
+
+const Hero: React.FC<HeroProps> = ({ isMobile }) => {
   const stats = [
     { number: "150+", label: "Clients Served", icon: Users },
     { number: "300%", label: "Avg Growth", icon: TrendingUp },
@@ -142,7 +146,7 @@ const Hero = () => {
                 className="transition-all duration-200"
               >
                 <Button className="bg-ssa-gold text-[#131212] hover:bg-ssa-gold/80 text-lg px-8 py-4 rounded-md shadow-md hover:shadow-lg transition-all duration-200 group relative overflow-hidden border-0">
-                  <span className="relative z-10 flex items-center font-semibold">
+                  <a href="#services" className="relative z-10 flex items-center font-semibold">
                     Our Services
                     <motion.div
                       animate={{ x: [0, 5, 0] }}
@@ -150,7 +154,7 @@ const Hero = () => {
                     >
                       <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                     </motion.div>
-                  </span>
+                  </a>
                 </Button>
               </motion.div>
               <motion.div
@@ -158,98 +162,81 @@ const Hero = () => {
                 whileTap={{ scale: 0.97 }}
                 className="transition-all duration-200"
               >
-                <Button variant="outline" className="border-ssa-gold text-ssa-gold hover:bg-ssa-gold/10 text-lg px-8 py-4 rounded-md shadow-md hover:shadow-lg transition-all duration-200 group">
-                  <span className="relative z-10 flex items-center font-semibold">
-                    View Our Work
-                    <motion.div
-                      animate={{ rotate: [0, 20, -20, 0] }}
-                      transition={{ duration: 1.2, repeat: Infinity }}
-                    >
-                      <Target className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                    </motion.div>
-                  </span>
+                <Button
+                  variant="outline"
+                  className="border-ssa-gold text-ssa-gold hover:bg-ssa-gold/10 text-lg px-8 py-4 rounded-md shadow-md hover:shadow-lg transition-all duration-200 group"
+                  asChild
+                >
+                  <a href="#contact" className="relative z-10 flex items-center font-semibold scroll-smooth">
+                    Get Quote
+                    <span className="ml-2">
+                      {/* Mail icon (Lucide or similar) */}
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:rotate-12 transition-transform">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15A2.25 2.25 0 002.25 6.75m19.5 0v.243a2.25 2.25 0 01-.659 1.591l-7.091 7.091a2.25 2.25 0 01-3.182 0L3.909 8.584A2.25 2.25 0 013.25 6.993V6.75" />
+                      </svg>
+                    </span>
+                  </a>
                 </Button>
               </motion.div>
             </motion.div>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95, x: 50 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative flex items-center justify-center min-h-[400px]"
-          >
-            {/* Modern floating glass card with layered depth and subtle floating animation */}
-            <motion.div
-              initial={{ y: 0 }}
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative z-10 w-full max-w-md mx-auto"
+          {!isMobile && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, x: 50 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative flex items-center justify-center min-h-[400px]"
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-ssa-gold/20">
-                {/* Glass effect */}
-                <div className="absolute inset-0 bg-white/10 backdrop-blur-2xl border border-ssa-gold/20 rounded-3xl z-0" />
-                {/* Animated gold gradient ring */}
-                <motion.div
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-                  className="absolute -inset-2 rounded-[2rem] border-4 border-transparent bg-gradient-to-tr from-ssa-gold/60 via-yellow-100/40 to-ssa-gold/60 bg-[length:200%_200%] animate-gradient-x pointer-events-none z-10"
-                  style={{ maskImage: 'linear-gradient(white, white), linear-gradient(white, white)', WebkitMaskComposite: 'xor', maskComposite: 'exclude' }}
-                />
-                {/* Content */}
-                <div className="relative z-20 flex flex-col items-center justify-center py-16 px-8">
+              {/* Modern floating glass card with layered depth and subtle floating animation */}
+              <motion.div
+                initial={{ y: 0 }}
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative z-10 w-full max-w-md mx-auto"
+              >
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-ssa-gold/20">
+                  {/* Glass effect */}
+                  <div className="absolute inset-0 bg-white/10 backdrop-blur-2xl border border-ssa-gold/20 rounded-3xl z-0" />
+                  {/* Animated gold gradient ring */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 0.5, type: 'spring' }}
-                    className="text-7xl md:text-8xl font-extrabold text-ssa-gold drop-shadow-lg mb-4 font-heading"
-                  >
-                    SSA
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 1 }}
-                    className="text-2xl md:text-3xl text-white font-bold mb-2 text-center"
-                  >
-                    Strategy Stars Agency
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 1.2 }}
-                    className="text-base text-gray-200 text-center"
-                  >
-                    Your Growth Partner
-                  </motion.div>
-                </div>
-                {/* Subtle floating gold particles */}
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute rounded-full bg-ssa-gold/30 blur-md pointer-events-none"
-                    style={{
-                      width: `${18 + i * 8}px`,
-                      height: `${18 + i * 8}px`,
-                      top: `${10 + i * 15}%`,
-                      left: `${i % 2 === 0 ? 5 : 80}%`,
-                    }}
-                    animate={{
-                      y: [0, i % 2 === 0 ? 10 : -10, 0],
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{
-                      duration: 6 + i,
-                      repeat: Infinity,
-                      delay: i * 0.7,
-                      ease: 'easeInOut',
-                    }}
+                    initial={{ rotate: 0 }}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+                    className="absolute -inset-2 rounded-[2rem] border-4 border-transparent bg-gradient-to-tr from-ssa-gold/60 via-yellow-100/40 to-ssa-gold/60 bg-[length:200%_200%] animate-gradient-x pointer-events-none z-10"
+                    style={{ maskImage: 'linear-gradient(white, white), linear-gradient(white, white)', WebkitMaskComposite: 'xor', maskComposite: 'exclude' }}
                   />
-                ))}
-              </div>
+                  {/* Content */}
+                  <div className="relative z-20 flex flex-col items-center justify-center py-16 px-8">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 1, delay: 0.5, type: 'spring' }}
+                      className="text-7xl md:text-8xl font-extrabold text-ssa-gold drop-shadow-lg mb-4 font-heading"
+                    >
+                      Strategy Stars Ads
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1, delay: 1 }}
+                      className="text-2xl md:text-3xl text-white font-bold mb-2 text-center"
+                    >
+                      Strategy Stars Ads
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1, delay: 1.2 }}
+                      className="text-base text-gray-200 text-center"
+                    >
+                      Your Growth Partner
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          )}
         </div>
 
         {/* Enhanced Stats Section */}
