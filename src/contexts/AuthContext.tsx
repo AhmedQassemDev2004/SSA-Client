@@ -7,7 +7,6 @@ import LoadingScreen from '@/components/LoadingScreen';
 
 // Secure token storage with encryption
 const TOKEN_KEY = 'auth_token';
-const USER_KEY = 'user_data';
 
 const secureStorage = {
     setToken: (token: string) => {
@@ -31,34 +30,11 @@ const secureStorage = {
         } catch (error) {
             console.error('Error removing token:', error);
         }
-    },
-    setUser: (user: User) => {
-        try {
-            localStorage.setItem(USER_KEY, JSON.stringify(user));
-        } catch (error) {
-            console.error('Error storing user:', error);
-        }
-    },
-    getUser: (): User | null => {
-        try {
-            const user = localStorage.getItem(USER_KEY);
-            return user ? JSON.parse(user) : null;
-        } catch (error) {
-            console.error('Error retrieving user:', error);
-            return null;
-        }
-    },
-    removeUser: () => {
-        try {
-            localStorage.removeItem(USER_KEY);
-        } catch (error) {
-            console.error('Error removing user:', error);
-        }
     }
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(secureStorage.getUser());
+    const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(secureStorage.getToken());
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -81,8 +57,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const interceptor = api.interceptors.response.use(
             (response) => response,
             async (error: AxiosError) => {
-                if (error.response?.status === 401) {
-                    // Token is invalid or expired
+                if (
+                    error.response?.status === 401 &&
+                    isAuthenticated &&
+                    window.location.pathname !== '/login' &&
+                    window.location.pathname !== '/register'
+                ) {
                     logout();
                     navigate('/login');
                 }
@@ -93,18 +73,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return () => {
             api.interceptors.response.eject(interceptor);
         };
-    }, [token, navigate]);
+    }, [token, navigate, isAuthenticated]);
 
-    const login = useCallback((accessToken: string, userData: User) => {
+    // Only store token, fetch user profile after login
+    const login = useCallback(async (accessToken: string) => {
         secureStorage.setToken(accessToken);
-        secureStorage.setUser(userData);
         setToken(accessToken);
-        setUser(userData);
+        setLoading(true);
+        try {
+            const response = await api.get('/auth/profile');
+            setUser(response.data);
+        } catch (error) {
+            setUser(null);
+            setError('Failed to fetch user profile after login.');
+        } finally {
+            setLoading(false);
+        }
     }, []);
 
     const logout = useCallback(() => {
         secureStorage.removeToken();
-        secureStorage.removeUser();
         setUser(null);
         setToken(null);
         delete api.defaults.headers.common['Authorization'];
@@ -115,7 +103,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
             const response = await api.patch('/user/profile', userData);
             const updatedUser = response.data;
-            secureStorage.setUser(updatedUser);
             setUser(updatedUser);
         } catch (error) {
             console.error('Error updating user:', error);
@@ -129,9 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const refreshUserData = async () => {
         try {
             const response = await api.get('/auth/profile');
-            const userData = response.data;
-            secureStorage.setUser(userData);
-            setUser(userData);
+            setUser(response.data);
         } catch (error) {
             console.error('Error refreshing user data:', error);
             if (error instanceof AxiosError && error.response?.status === 401) {

@@ -214,7 +214,7 @@ const Hero: React.FC<HeroProps> = ({ isMobile }) => {
                       transition={{ duration: 1, delay: 0.5, type: 'spring' }}
                       className="text-7xl md:text-8xl font-extrabold text-ssa-gold drop-shadow-lg mb-4 font-heading"
                     >
-                      Strategy Stars Ads
+                      SSA
                     </motion.div>
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}

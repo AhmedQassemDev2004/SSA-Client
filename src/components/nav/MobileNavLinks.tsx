@@ -19,6 +19,9 @@ export const MobileNavLinks = ({ currentPath, setIsMenuOpen }: MobileNavLinksPro
         <Link to="/services" className="text-white hover:text-ssa-gold transition-colors font-medium" onClick={() => setIsMenuOpen(false)}>
           All Services
         </Link>
+        <a href="#portfolios" className="text-white hover:text-ssa-gold transition-colors font-medium" onClick={() => setIsMenuOpen(false)}>
+          Portfolio
+        </a>
         <a href="#about" className="text-white hover:text-ssa-gold transition-colors font-medium" onClick={() => setIsMenuOpen(false)}>
           About
         </a>
@@ -40,6 +43,9 @@ export const MobileNavLinks = ({ currentPath, setIsMenuOpen }: MobileNavLinksPro
       </Link>
       <Link to="/services" className="text-white hover:text-ssa-gold transition-colors font-medium" onClick={() => setIsMenuOpen(false)}>
         Services
+      </Link>
+      <Link to="/portfolios" className="text-white hover:text-ssa-gold transition-colors font-medium" onClick={() => setIsMenuOpen(false)}>
+        Portfolio
       </Link>
       <Link to="/#about" className="text-white hover:text-ssa-gold transition-colors font-medium" onClick={() => setIsMenuOpen(false)}>
         About
