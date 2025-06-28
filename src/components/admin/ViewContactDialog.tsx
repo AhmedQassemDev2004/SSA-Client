@@ -36,6 +36,11 @@ export const ViewContactDialog = ({ contact, isOpen, onClose }: ViewContactDialo
           </div>
           
           <div>
+            <h3 className="text-sm font-medium text-gray-400">Phone</h3>
+            <p className="mt-1 text-gray-200">{contact.phone}</p>
+          </div>
+          
+          <div>
             <h3 className="text-sm font-medium text-gray-400">Subject</h3>
             <p className="mt-1 text-gray-200">{contact.subject}</p>
           </div>

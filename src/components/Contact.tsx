@@ -8,6 +8,7 @@ import { api } from "@/lib/api";
 interface ContactFormData {
   name: string;
   email: string;
+  phone: string;
   subject: string;
   message: string;
 }
@@ -22,6 +23,7 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
+    phone: "",
     subject: "",
     message: "",
   });
@@ -62,6 +64,7 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
       setFormData({
         name: "",
         email: "",
+        phone: "",
         subject: "",
         message: "",
       });
@@ -131,7 +134,7 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
           
           <div>
             <form onSubmit={handleSubmit} className="space-y-6 p-8 bg-[#1a1a1a] rounded-xl border border-gray-800">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">Name</label>
                   <Input 
@@ -154,6 +157,18 @@ const Contact: React.FC<ContactProps> = ({ isMobile }) => {
                     onChange={handleChange}
                     className="bg-[#242424] border-gray-700 text-white" 
                     placeholder="john@example.com" 
+                    required 
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">Phone</label>
+                  <Input 
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="bg-[#242424] border-gray-700 text-white" 
+                    placeholder="011 13337724" 
                     required 
                   />
                 </div>

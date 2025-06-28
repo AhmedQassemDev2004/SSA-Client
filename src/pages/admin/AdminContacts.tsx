@@ -40,6 +40,7 @@ const AdminContacts = () => {
     const matchesSearch = 
       contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       contact.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      contact.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
       contact.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
       contact.message.toLowerCase().includes(searchQuery.toLowerCase());
 
@@ -197,6 +198,7 @@ const AdminContacts = () => {
                     <TableRow className="border-gray-700 hover:bg-gray-800/50">
                       <TableHead className="text-gray-400">Name</TableHead>
                       <TableHead className="text-gray-400">Email</TableHead>
+                      <TableHead className="text-gray-400">Phone</TableHead>
                       <TableHead className="text-gray-400">Subject</TableHead>
                       <TableHead className="text-gray-400">Message</TableHead>
                       <TableHead className="text-gray-400">Date</TableHead>
@@ -206,7 +208,7 @@ const AdminContacts = () => {
                   <TableBody>
                     {isLoading ? (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center text-gray-400 py-8">
+                        <TableCell colSpan={7} className="text-center text-gray-400 py-8">
                           <div className="flex items-center justify-center">
                             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ssa-gold"></div>
                             <span className="ml-3">Loading contacts...</span>
@@ -215,7 +217,7 @@ const AdminContacts = () => {
                       </TableRow>
                     ) : filteredContacts.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center text-gray-400 py-8">
+                        <TableCell colSpan={7} className="text-center text-gray-400 py-8">
                           <div className="flex flex-col items-center justify-center">
                             <Mail className="h-12 w-12 text-gray-600 mb-2" />
                             <p>No contacts found</p>
@@ -235,6 +237,7 @@ const AdminContacts = () => {
                         >
                           <TableCell className="text-gray-200">{contact.name}</TableCell>
                           <TableCell className="text-gray-200">{contact.email}</TableCell>
+                          <TableCell className="text-gray-200">{contact.phone}</TableCell>
                           <TableCell className="text-gray-200">{contact.subject}</TableCell>
                           <TableCell className="text-gray-200 max-w-xs truncate">
                             {contact.message}
