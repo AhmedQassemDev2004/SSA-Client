@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useScrollProgress } from '@/hooks/use-scroll-progress';
+import { useScroll } from '@/contexts/ScrollContext';
 
 interface ProgressBarProps {
   className?: string;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ className = '' }) => {
-  const scrollProgress = useScrollProgress();
+  const { scrollProgress } = useScroll();
 
   return (
     <motion.div 

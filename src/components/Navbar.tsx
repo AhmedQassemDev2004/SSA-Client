@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useScroll } from "@/contexts/ScrollContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,37 +18,26 @@ import { MobileNavLinks } from "./nav/MobileNavLinks";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { isScrolled } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout();
     navigate("/login");
-  };
+  }, [logout, navigate]);
 
-  const getInitials = (name: string) => {
+  const getInitials = useCallback((name: string) => {
     return name
       .split(" ")
       .map((n) => n[0])
       .join("")
       .toUpperCase();
-  };
+  }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 glass-effect py-4 transition-all duration-300 ${scrolled ? 'bg-opacity-40 backdrop-blur-md' : ''}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 glass-effect py-4 transition-all duration-300 ${isScrolled ? 'bg-opacity-40 backdrop-blur-md' : ''}`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/">

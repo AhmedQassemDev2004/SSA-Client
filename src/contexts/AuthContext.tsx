@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext, useMemo } from 'react';
 import { api } from '../lib/api';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const isAuthenticated = !!token && !!user;
+    const isAuthenticated = useMemo(() => !!token && !!user, [token, user]);
 
     const clearError = useCallback(() => {
         setError(null);
@@ -99,7 +99,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         navigate('/login');
     }, [navigate]);
 
-    const updateUser = async (userData: Partial<User>) => {
+    const updateUser = useCallback(async (userData: Partial<User>) => {
         try {
             const response = await api.patch('/user/profile', userData);
             const updatedUser = response.data;
@@ -111,9 +111,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
             throw error;
         }
-    };
+    }, []);
 
-    const refreshUserData = async () => {
+    const refreshUserData = useCallback(async () => {
         try {
             const response = await api.get('/auth/profile');
             setUser(response.data);
@@ -124,7 +124,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
             throw error;
         }
-    };
+    }, [logout]);
 
     // Check authentication status on mount
     useEffect(() => {
@@ -144,13 +144,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
 
         initializeAuth();
-    }, [token, logout]);
+    }, [token, logout, refreshUserData]);
 
-    if(loading) {
-        return <LoadingScreen />
-    }
-
-    const value: AuthContextType = {
+    const value = useMemo<AuthContextType>(() => ({
         user,
         token,
         isAuthenticated,
@@ -161,7 +157,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         updateUser,
         refreshUserData,
         clearError,
-    };
+    }), [user, token, isAuthenticated, loading, error, login, logout, updateUser, refreshUserData, clearError]);
+
+    if(loading) {
+        return <LoadingScreen />
+    }
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -13,8 +13,18 @@ import ScrollToTop from "@/components/ScrollToTop";
 import AnimatedBackgroundWrapper from "@/components/AnimatedBackgroundWrapper";
 import { useIsMobile } from "@/hooks/use-mobile";
 
+// Memoized components to prevent unnecessary re-renders
+const MemoizedHero = memo(Hero);
+const MemoizedAbout = memo(About);
+const MemoizedPortfolios = memo(Portfolios);
+const MemoizedServices = memo(Services);
+const MemoizedTestimonials = memo(Testimonials);
+const MemoizedContact = memo(Contact);
+const MemoizedFooter = memo(Footer);
+
 const Index = () => {
   const isMobile = useIsMobile();
+  
   // Animation variants for staggered section reveals
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -45,67 +55,18 @@ const Index = () => {
   };
 
   return (
-    <motion.div 
-      className="min-h-screen bg-[#131212] text-white"
+    <motion.div
+      className="relative min-h-screen bg-[#131212]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 0.5 }}
     >
+      {/* Animated Background */}
+      <AnimatedBackgroundWrapper />
+      
       {/* Progress Bar */}
       <ProgressBar />
-      
-      {/* Animated Background (appears after hero) - only on desktop */}
-      {!isMobile && <AnimatedBackgroundWrapper />}
-      
-      {/* Hero section background elements - only on desktop */}
-      {!isMobile && (
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-ssa-gold/5 blur-3xl rounded-full"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, -50, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-ssa-gold/3 blur-3xl rounded-full"
-            animate={{
-              x: [0, -80, 0],
-              y: [0, 60, 0],
-              scale: [1, 0.8, 1],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 5,
-            }}
-          />
-          <motion.div
-            className="absolute top-1/2 left-1/2 w-64 h-64 bg-ssa-gold/4 blur-3xl rounded-full"
-            animate={{
-              x: [0, 120, 0],
-              y: [0, -80, 0],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: 30,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 10,
-            }}
-          />
-        </div>
-      )}
 
-      <Navbar />
-      
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -113,7 +74,7 @@ const Index = () => {
         className="content-section"
       >
         <motion.div variants={sectionVariants}>
-          <Hero isMobile={isMobile} />
+          <MemoizedHero isMobile={isMobile} />
         </motion.div>
         
         <motion.div 
@@ -121,7 +82,7 @@ const Index = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <About isMobile={isMobile} />
+          <MemoizedAbout isMobile={isMobile} />
         </motion.div>
         
         <motion.div 
@@ -129,7 +90,7 @@ const Index = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <Portfolios isMobile={isMobile} />
+          <MemoizedPortfolios isMobile={isMobile} />
         </motion.div>
         
         <motion.div 
@@ -137,7 +98,7 @@ const Index = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <Services isMobile={isMobile} />
+          <MemoizedServices isMobile={isMobile} />
         </motion.div>
         
         <motion.div 
@@ -145,7 +106,7 @@ const Index = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <Testimonials isMobile={isMobile} />
+          <MemoizedTestimonials isMobile={isMobile} />
         </motion.div>
         
         <motion.div 
@@ -153,7 +114,7 @@ const Index = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <Contact isMobile={isMobile} />
+          <MemoizedContact isMobile={isMobile} />
         </motion.div>
         
         <motion.div 
@@ -161,7 +122,7 @@ const Index = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <Footer isMobile={isMobile} />
+          <MemoizedFooter isMobile={isMobile} />
         </motion.div>
       </motion.div>
       
@@ -171,4 +132,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default memo(Index);
