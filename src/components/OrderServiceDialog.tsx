@@ -75,91 +75,91 @@ export function OrderServiceDialog({ open, onOpenChange, serviceId, serviceName 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gray-900 border-gray-800 text-gray-100 max-w-2xl">
+      <DialogContent className="bg-gray-900 border-gray-800 text-gray-100 max-w-2xl mx-4 sm:mx-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-ssa-gold to-yellow-400 bg-clip-text text-transparent">
+          <DialogTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-ssa-gold to-yellow-400 bg-clip-text text-transparent">
             Order {serviceName}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name" className="text-sm sm:text-base">Full Name</Label>
               <Input
                 id="name"
                 placeholder="Enter your full name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="bg-gray-800 border-gray-700"
+                className="bg-gray-800 border-gray-700 text-sm sm:text-base"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm sm:text-base">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="bg-gray-800 border-gray-700"
+                className="bg-gray-800 border-gray-700 text-sm sm:text-base"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="phone" className="text-sm sm:text-base">Phone Number</Label>
               <Input
                 id="phone"
                 type="tel"
                 placeholder="Enter your phone number"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="bg-gray-800 border-gray-700"
+                className="bg-gray-800 border-gray-700 text-sm sm:text-base"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="company">Company Name</Label>
+              <Label htmlFor="company" className="text-sm sm:text-base">Company Name</Label>
               <Input
                 id="company"
                 placeholder="Enter your company name"
                 value={formData.company}
                 onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                className="bg-gray-800 border-gray-700"
+                className="bg-gray-800 border-gray-700 text-sm sm:text-base"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message">Project Details</Label>
+            <Label htmlFor="message" className="text-sm sm:text-base">Project Details</Label>
             <Textarea
               id="message"
               placeholder="Tell us about your project requirements"
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="bg-gray-800 border-gray-700 min-h-[150px]"
+              className="bg-gray-800 border-gray-700 min-h-[120px] sm:min-h-[150px] text-sm sm:text-base"
               required
             />
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-ssa-gold transition-colors"
+              className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-ssa-gold transition-colors w-full sm:w-auto text-sm sm:text-base"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={isLoading}
-              className="bg-gradient-to-r from-ssa-gold to-yellow-400 hover:from-yellow-500 hover:to-ssa-gold text-gray-900 font-medium transition-all"
+              className="bg-gradient-to-r from-ssa-gold to-yellow-400 hover:from-yellow-500 hover:to-ssa-gold text-gray-900 font-medium transition-all w-full sm:w-auto text-sm sm:text-base"
             >
               {isLoading ? "Submitting..." : "Submit Order"}
             </Button>
